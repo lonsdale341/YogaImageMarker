@@ -3,16 +3,39 @@ using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine;
 
-public class TouchController : MonoBehaviour {
+public class TouchController : MonoBehaviour
+{
 
     public GameObject Girl;
     public float Speed = 0.1f;
-
-    void Update()
+    Vector3 CentreAround;
+    public GameObject MHuman_Pivot;
+    private float Y_pos;
+    private float Scale_Lim;
+    void Start()
     {
+        Debug.Log(Girl.transform.up);
         if (Girl != null)
         {
-            //Girl.transform.localPosition=new Vector3(0,-0.063f,0);
+            Y_pos = Girl.transform.position.y;
+            Scale_Lim = Girl.transform.localScale.x;
+        }
+
+    }
+    void Update()
+    {
+        if (Girl != null && MHuman_Pivot != null)
+        {
+            CentreAround = new Vector3(MHuman_Pivot.transform.position.x, Y_pos, MHuman_Pivot.transform.position.z);
+            if (Girl.transform.localScale.x > 1.25f*Scale_Lim)
+            {
+                Girl.transform.localScale = new Vector3(1.25f * Scale_Lim, 1.25f * Scale_Lim, 1.25f * Scale_Lim);
+            }
+            if (Girl.transform.localScale.x < 0.75f * Scale_Lim)
+            {
+                Girl.transform.localScale = new Vector3(0.75f * Scale_Lim, 0.75f * Scale_Lim, 0.75f * Scale_Lim);
+            }
+            Girl.transform.localPosition = new Vector3(0, -Y_pos, 0);
         }
 #if ((UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR)
 
@@ -36,7 +59,9 @@ public class TouchController : MonoBehaviour {
               //  Cube.transform.Rotate(xAngle, yAngle, zAngle, Space.World);
                if (Girl!=null)
             {
-                Girl.transform.RotateAround(Girl.transform.position, Girl.transform.up, -yAngle);
+                Girl.transform.RotateAround(CentreAround, Vector3.up, -yAngle);
+                
+                // Girl.transform.RotateAround(MHuman_Pivot.transform.position, Vector3.forward, xAngle);
             }
                 break;
             }
@@ -55,9 +80,11 @@ public class TouchController : MonoBehaviour {
             float zAngle = 0;
 
             // Cube.transform.Rotate (xAngle, yAngle, zAngle, Space.World);
-            if (Girl!=null)
+            if (Girl != null)
             {
-                Girl.transform.RotateAround(Girl.transform.position, Girl.transform.up, -yAngle);
+               // Girl.transform.RotateAround(MHuman_Pivot.transform.position, Girl.transform.up, -yAngle);
+               // Girl.transform.RotateAround(MHuman_Pivot.transform.position, Vector3.forward, xAngle);
+                Girl.transform.Rotate(zAngle, yAngle, xAngle, Space.World);
             }
         }
 #endif
