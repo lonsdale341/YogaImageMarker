@@ -17,8 +17,9 @@ public class TouchController : MonoBehaviour
         Debug.Log(Girl.transform.up);
         if (Girl != null)
         {
-            Y_pos = Girl.transform.position.y;
+            Y_pos = Girl.transform.localPosition.y;
             Scale_Lim = Girl.transform.localScale.x;
+            Debug.Log(Y_pos);
         }
 
     }
@@ -27,13 +28,21 @@ public class TouchController : MonoBehaviour
         if (Girl != null && MHuman_Pivot != null)
         {
             CentreAround = new Vector3(MHuman_Pivot.transform.position.x, Y_pos, MHuman_Pivot.transform.position.z);
-            if (Girl.transform.localScale.x > 1.25f*Scale_Lim)
+            if (Girl.transform.localScale.x > 2f*Scale_Lim)
             {
                 Girl.transform.localScale = new Vector3(1.25f * Scale_Lim, 1.25f * Scale_Lim, 1.25f * Scale_Lim);
             }
-            if (Girl.transform.localScale.x < 0.75f * Scale_Lim)
+            if (Girl.transform.localScale.x < 0.25f * Scale_Lim)
             {
                 Girl.transform.localScale = new Vector3(0.75f * Scale_Lim, 0.75f * Scale_Lim, 0.75f * Scale_Lim);
+            }
+            if (Girl.transform.eulerAngles.z <-90)
+            {
+               // Girl.transform.eulerAngles = new Vector3(Girl.transform.eulerAngles.x, Girl.transform.eulerAngles.y, -90);
+            }
+            if (Girl.transform.eulerAngles.z >90)
+            {
+               // Girl.transform.eulerAngles = new Vector3(Girl.transform.eulerAngles.x, Girl.transform.eulerAngles.y, 90);
             }
             Girl.transform.localPosition = new Vector3(0, -Y_pos, 0);
         }
@@ -59,9 +68,10 @@ public class TouchController : MonoBehaviour
               //  Cube.transform.Rotate(xAngle, yAngle, zAngle, Space.World);
                if (Girl!=null)
             {
-                Girl.transform.RotateAround(CentreAround, Vector3.up, -yAngle);
-                
-                // Girl.transform.RotateAround(MHuman_Pivot.transform.position, Vector3.forward, xAngle);
+               // Girl.transform.RotateAround(MHuman_Pivot.transform.position, Girl.transform.up, -yAngle);
+                Girl.transform.RotateAround(Girl.transform.position, Girl.transform.up, -yAngle);
+                Girl.transform.RotateAround(Girl.transform.position, Girl.transform.forward, xAngle);
+               // Girl.transform.Rotate(zAngle, yAngle, xAngle, Space.World);
             }
                 break;
             }
@@ -83,10 +93,21 @@ public class TouchController : MonoBehaviour
             if (Girl != null)
             {
                // Girl.transform.RotateAround(MHuman_Pivot.transform.position, Girl.transform.up, -yAngle);
-               // Girl.transform.RotateAround(MHuman_Pivot.transform.position, Vector3.forward, xAngle);
-                Girl.transform.Rotate(zAngle, yAngle, xAngle, Space.World);
+                Girl.transform.RotateAround(Girl.transform.position, Girl.transform.up, -yAngle);
+                Girl.transform.RotateAround(Girl.transform.position, Girl.transform.forward, xAngle);
+               // Girl.transform.Rotate(zAngle, yAngle, xAngle, Space.World);
             }
         }
 #endif
+    }
+
+    public void ResetPosition()
+    {
+        if (Girl != null)
+        {
+            
+            Girl.transform.localEulerAngles=new Vector3(0,0,0);
+            
+        }
     }
 }
