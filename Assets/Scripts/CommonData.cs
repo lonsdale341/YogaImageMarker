@@ -5,5 +5,6 @@ using UnityEngine;
 public class CommonData  {
 
     public static PrefabList prefabs;
-	
+    public static string AnimationCurrent;
+
 }

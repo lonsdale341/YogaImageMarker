@@ -29,12 +29,12 @@ public struct MaterialEntry
 [System.Serializable]
 public struct LabellEntry
 {
-    public LabellEntry(string nameAnimation)
+    public LabellEntry(string nameAnimation,GameObject label)
     {
 
-        Labels = new List<GameObject>();
+        this.Labels = label;
         this.nameAnimation = nameAnimation;
     }
     public string nameAnimation;
-    public List<GameObject> Labels;
+    public GameObject Labels;
 }

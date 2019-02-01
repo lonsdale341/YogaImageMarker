@@ -5,8 +5,12 @@ using UnityEngine;
 public class MainManager : MonoBehaviour {
 
 	// Use this for initialization
-	void Start () {
+    void Awake()
+    {
         CommonData.prefabs = FindObjectOfType<PrefabList>();
+    }
+	void Start () {
+        
 	}
 	
 	// Update is called once per frame

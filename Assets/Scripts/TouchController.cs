@@ -107,7 +107,7 @@ public class TouchController : MonoBehaviour
         {
             
             Girl.transform.localEulerAngles=new Vector3(0,0,0);
-            
+            Girl.transform.localScale = new Vector3( Scale_Lim,  Scale_Lim, Scale_Lim);
         }
     }
 }

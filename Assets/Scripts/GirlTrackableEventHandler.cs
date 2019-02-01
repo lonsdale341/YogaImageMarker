@@ -19,7 +19,7 @@ using Vuforia;
 public class GirlTrackableEventHandler : MonoBehaviour, ITrackableEventHandler
 {
     public GameObject Girl;
-    public TouchController touchController;
+    float prevSpeed;
     #region PROTECTED_MEMBER_VARIABLES
 
     protected TrackableBehaviour mTrackableBehaviour;
@@ -84,7 +84,7 @@ public class GirlTrackableEventHandler : MonoBehaviour, ITrackableEventHandler
         var rendererComponents = GetComponentsInChildren<Renderer>(true);
         var colliderComponents = GetComponentsInChildren<Collider>(true);
         var canvasComponents = GetComponentsInChildren<Canvas>(true);
-
+        var animators = GetComponentsInChildren<Animator>(true);
         // Enable rendering:
         foreach (var component in rendererComponents)
             component.enabled = true;
@@ -96,7 +96,15 @@ public class GirlTrackableEventHandler : MonoBehaviour, ITrackableEventHandler
         // Enable canvas':
         foreach (var component in canvasComponents)
             component.enabled = true;
-        touchController.Girl = Girl;
+        foreach (Animator an in animators)
+        {
+            if (prevSpeed!=0)
+            {
+                an.speed = prevSpeed;
+            }
+            
+
+        }
     }
 
 
@@ -105,7 +113,7 @@ public class GirlTrackableEventHandler : MonoBehaviour, ITrackableEventHandler
         var rendererComponents = GetComponentsInChildren<Renderer>(true);
         var colliderComponents = GetComponentsInChildren<Collider>(true);
         var canvasComponents = GetComponentsInChildren<Canvas>(true);
-
+        var animators = GetComponentsInChildren<Animator>(true);
         // Disable rendering:
         foreach (var component in rendererComponents)
             component.enabled = false;
@@ -117,6 +125,12 @@ public class GirlTrackableEventHandler : MonoBehaviour, ITrackableEventHandler
         // Disable canvas':
         foreach (var component in canvasComponents)
             component.enabled = false;
+        foreach (Animator an in animators)
+        {
+            prevSpeed = an.speed;
+            an.speed = 0;
+
+        }
     }
 
     #endregion // PROTECTED_METHODS
