@@ -26,3 +26,15 @@ public struct MaterialEntry
     public string nameAnimation;
     public List<Material> Materials;
 }
+[System.Serializable]
+public struct LabellEntry
+{
+    public LabellEntry(string nameAnimation)
+    {
+
+        Labels = new List<GameObject>();
+        this.nameAnimation = nameAnimation;
+    }
+    public string nameAnimation;
+    public List<GameObject> Labels;
+}
