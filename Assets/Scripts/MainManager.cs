@@ -8,6 +8,7 @@ public class MainManager : MonoBehaviour {
     void Awake()
     {
         CommonData.prefabs = FindObjectOfType<PrefabList>();
+        CommonData.controllers_Events = FindObjectsOfType<ControllerEvents>();
     }
 	void Start () {
         
